@@ -47,7 +47,7 @@ const PORT = process.env.PORT || 4000
 
 // Ruta raíz para comprobar que el servidor responde
 app.get('/', (req, res) => {
-  res.send('¡MiFunk-oh! backend desplegado correctamente 🚀')
+  res.send('¡MiFunk-oh! backend desplegado correctamente')
 })
 
 app.listen(PORT, () => {
