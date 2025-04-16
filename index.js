@@ -45,6 +45,11 @@ app.use('/api/mensajes', mensajesRoutes);
 // Puerto de escucha (4000 por defecto)
 const PORT = process.env.PORT || 4000
 
+// Ruta raíz para comprobar que el servidor responde
+app.get('/', (req, res) => {
+  res.send('¡MiFunk-oh! backend desplegado correctamente 🚀')
+})
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })
