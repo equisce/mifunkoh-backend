@@ -1,7 +1,7 @@
-import Mensaje from '../models/Mensaje.js';
+const Mensaje = require('../models/Mensaje');
 
-// POST / API / mensajes
-export const crearMensaje = async (req, res) => {
+// POST /api/mensajes
+const crearMensaje = async (req, res) => {
   try {
     console.log('Nuevo mensaje recibido:', req.body);
     const nuevoMensaje = new Mensaje(req.body);
@@ -11,3 +11,15 @@ export const crearMensaje = async (req, res) => {
     res.status(400).json({ mensaje: 'Error al enviar el mensaje', error });
   }
 };
+
+// GET /api/mensajes
+const obtenerMensajes = async (req, res) => {
+  try {
+    const mensajes = await Mensaje.find();
+    res.status(200).json(mensajes);
+  } catch (error) {
+    res.status(400).json({ mensaje: 'Error al obtener los mensajes', error });
+  }
+};
+
+module.exports = { crearMensaje, obtenerMensajes };

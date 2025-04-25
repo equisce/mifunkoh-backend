@@ -1,10 +1,10 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose');
 
 // Prototipo de esquema de un Funko
 const funkoSchema = new mongoose.Schema({
   nombre: {
     type: String,
-    required: true, //obligatorio!!
+    required: true,
     trim: true
   },
   descripcion: {
@@ -21,17 +21,17 @@ const funkoSchema = new mongoose.Schema({
   },
   categoria: {
     type: [String],
-    required: true, // le digo a Mongoose que esta prop. puede ser un array de strings
+    required: true,
     trim: true
   },
   opiniones: {
-    type: [String], // Para las opiniones de cada producto
+    type: [String],
     default: []
   }
 }, {
-  timestamps: true // añade createdAt y updatedAt automáticamente
-})
+  timestamps: true
+});
 
-// Exportamos el modelo Funko para usarlo en controladores
-const Funko = mongoose.model('Funko', funkoSchema)
-export default Funko
+// Exportamos el modelo Funko
+const Funko = mongoose.model('Funko', funkoSchema);
+module.exports = Funko;

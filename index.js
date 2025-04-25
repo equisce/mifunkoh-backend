@@ -1,55 +1,43 @@
 // Importamos las librerías
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import path from 'path'
-import uploadRoutes from './routes/upload.routes.js'
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
 
-
-// Hacemos la conexión a la base de datos
-import conectarDB from './database.js'
-
-// Importamos las rutas de los funkos
-import funkoRoutes from './routes/funkos.routes.js'
-
-// Importamos las rutas del mensaje del formulario
-
-import mensajesRoutes from './routes/mensajes.routes.js';
-
+// Importamos rutas y conexión
+const conectarDB = require('./database');
+const uploadRoutes = require('./routes/upload.routes');
+const funkoRoutes = require('./routes/funkos.routes');
+const mensajesRoutes = require('./routes/mensajes.routes');
+const usuariosRoutes = require('./routes/usuarios.routes'); // LOGIN
 
 // Cargamos variables de entorno (.env)
-dotenv.config()
+dotenv.config();
 
 // Iniciamos Express
-const app = express()
+const app = express();
 
 // Conectamos a MongoDB
-conectarDB()
+conectarDB();
 
 // Middleware para leer JSON y permitir CORS
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
-// Ruta para subir imágenes
-app.use('/api/upload', uploadRoutes)
-
-// Hacemos pública la carpeta uploads
-app.use('/uploads', express.static('uploads'))
-
-// Prefijo para las rutas de nuestra API (funkos)
-app.use('/api/funkos', funkoRoutes)
-
-//Prefijo para las rutas de nuestra API (mensajes)
+// Rutas API
+app.use('/api/upload', uploadRoutes);
+app.use('/uploads', express.static('uploads'));
+app.use('/api/funkos', funkoRoutes);
 app.use('/api/mensajes', mensajesRoutes);
+app.use('/api/usuarios', usuariosRoutes); // LOGIN
 
-// Puerto de escucha (4000 por defecto)
-const PORT = process.env.PORT || 4000
-
-// Ruta raíz para comprobar que el servidor responde
+// Ruta de prueba
 app.get('/', (req, res) => {
-  res.send('¡MiFunk-oh! backend desplegado correctamente')
-})
+  res.send('¡MiFunk-oh! backend desplegado correctamente');
+});
 
+// Puerto
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`)
-})
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});

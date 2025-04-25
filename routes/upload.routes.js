@@ -1,26 +1,26 @@
-import express from 'express'
-import multer from 'multer'
-import path from 'path'
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
 
-const router = express.Router()
+const router = express.Router();
 
 // Configuración del almacenamiento
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads/') // Carpeta donde se guardarán mis imagenes
+    cb(null, 'uploads/'); // Carpeta donde se guardarán las imágenes
   },
   filename(req, file, cb) {
-    const ext = path.extname(file.originalname)
-    cb(null, `${Date.now()}${ext}`) // nombre con timestamp
+    const ext = path.extname(file.originalname);
+    cb(null, `${Date.now()}${ext}`); // nombre con timestamp
   }
-})
+});
 
 // Middleware multer
-const upload = multer({ storage })
+const upload = multer({ storage });
 
-// Ruta para subir mis imágenes
+// Ruta para subir imágenes
 router.post('/', upload.single('imagen'), (req, res) => {
-  res.json({ url: `/uploads/${req.file.filename}` })
-})
+  res.json({ url: `/uploads/${req.file.filename}` });
+});
 
-export default router
+module.exports = router;

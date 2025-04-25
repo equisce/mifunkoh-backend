@@ -1,8 +1,9 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose');
 
 // Nos conectamos a MongoDB usando la URI del .env
 const conectarDB = async () => {
   try {
+    console.log('Conectando a Mongo con URI:', process.env.MONGODB_URI);
     await mongoose.connect(process.env.MONGODB_URI)
     console.log('Conectado a MongoDB correctamente')
   } catch (error) {
@@ -11,4 +12,5 @@ const conectarDB = async () => {
   }
 }
 
-export default conectarDB
+module.exports = conectarDB;
+
